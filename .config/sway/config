@@ -4,9 +4,6 @@
 #
 # Read `man 5 sway` for a complete reference.
 
-#Fonts
-font pango:Arimo Nerd Font:style=Regular 10
-
 ### Variables
 #
 # Logo key. Use Mod1 for Alt.
@@ -19,10 +16,12 @@ set $right l
 # Your preferred terminal emulator
 set $term tilix
 
+
 ## Accent Colors
-set $primary_color "#6effbb"
-set $background_color "#323d38"
+set $primary_color "#4A90D9"
+set $background_color "#3A3A3A"
 set $text_color "#ffffff"
+
 
 # Your preferred application launcher
 # Note: it's recommended that you pass the final command to sway
@@ -31,7 +30,7 @@ set $menu "rofi -modi window,drun,run -show drun -sidebar-mode -terminal termite
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+output * bg $HOME/Pictures/wall.jpg fill
 #
 # Example configuration:
 #
@@ -66,6 +65,11 @@ output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 #
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
+input 1739:32531:Synaptics_TM3253-001 {
+    tap enabled
+    natural_scroll enabled
+    dwt enabled
+}
 
 ### Key bindings
 #
@@ -210,11 +214,8 @@ bindsym $mod+r mode "resize"
 #
 # Read `man 5 sway-bar` for more information about this section.
 bar {
-    swaybar_command waybar
+	swaybar_command waybar
 }
-
-#Wallpaper
-output HDMI-A-1 bg ~/Pictures/wall.png stretch
 
 #Border
 default_border pixel 5
@@ -224,19 +225,20 @@ gaps inner 10
 gaps outer 3
 
 ###sway window colors###
-### class                 border  		background 		text    	indicator 		child_border ###
-client.focused		$primary_color 		$primary_color 		$text_color 	$primary_color		$primary_color
-client.focused_inactive $background_color 	$background_color 	$text_color 	$background_color   	$background_color
-client.unfocused        $background_color 	$background_color 	$text_color 	$background_color   	$background_color
+### class               border  			background 			text    		indicator 			child_border ###
+client.focused			$primary_color 		$primary_color 		$text_color 	$primary_color		$primary_color
+client.focused_inactive $background_color 	$background_color 	$text_color 	$background_color   $background_color
+client.unfocused        $background_color 	$background_color 	$text_color 	$background_color   $background_color
 client.urgent           $primary_color 		$primary_color 		$text_color 	$primary_color		$primary_color
 
-#Starting polkit gnome
-exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+# Screen Backlight control using LIGHT
+bindsym XF86MonBrightnessUp exec light -A 5
+bindsym XF86MonBrightnessDown exec light -U 5
 
-# Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #decrease sound volume
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
+# change volume or toggle mute
+bindsym XF86AudioRaiseVolume exec amixer -q -D pulse sset Master 5%+ 
+bindsym XF86AudioLowerVolume exec amixer -q -D pulse sset Master 5%-
+bindsym XF86AudioMute exec amixer -q -D pulse sset Master toggle
 
 # Media player controls
 bindsym XF86AudioPlay exec playerctl play
