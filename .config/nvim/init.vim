@@ -24,6 +24,8 @@ set completeopt=noinsert,menuone,noselect
 " Normal Vim Settings
 syntax on
 set number
+set relativenumber
+set autoindent
 set tabstop=4
 set softtabstop=0 noexpandtab
 set shiftwidth=4
