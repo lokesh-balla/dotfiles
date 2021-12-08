@@ -14,9 +14,4 @@ git clone https://github.com/zsh-users/zsh-autosuggestions.git
 git clone https://github.com/ael-code/zsh-colored-man-pages.git
 git clone https://github.com/zpm-zsh/colorize.git
 
-export ZSH_THEMES_PATH=~/.zsh_user_configs/themes/
-
-cd $ZSH_THEMES_PATH
-
-git clone https://github.com/toytag/robbyrussell-fullpath.zsh-theme
 ```
