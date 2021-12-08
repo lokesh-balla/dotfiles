@@ -1,33 +1,41 @@
+## Main PATH for all ZSH Configs
 export ZSH=~/.zsh_user_configs
 
-# History Command Configuration
+## History command configuration
 HISTFILE=~/.zsh_history
 HISTSIZE=50000
-SAVEHIST=10000
+SAVEHIST=50000
 
-# set beep sound on error
-setopt beep
+setopt BANG_HIST                 # Treat the '!' character specially during expansion.
+setopt EXTENDED_HISTORY          # Write the history file in the ":start:elapsed;command" format.
+setopt SHARE_HISTORY             # Share history between all sessions.
+setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first when trimming history.
+setopt HIST_IGNORE_DUPS          # Don't record an entry that was just recorded again.
+setopt HIST_IGNORE_SPACE         # Don't record an entry starting with a space.
+setopt HIST_VERIFY               # Don't execute immediately upon history expansion.
 
-# To mimic behaviour of BASH when there is no match
-unsetopt nomatch
-
-# Load all of the config files from "$ZSH_CONFIG_PATH/base_config/" that end in .zsh
-for config_file ($ZSH/base_config/*.zsh); do
-  source $config_file
-done
-
-# Load the theme
-source $ZSH/themes/robbyrussell.zsh-theme
-
-# Load all the plugins
+## Load Plugins
 for plugin ($ZSH/plugins/*/*.plugin.zsh); do
   source $plugin
 done
 
+## Load Theme
+setopt PROMPT_SUBST # the prompt string is first subjected to parameter expansion, command substitution and arithmetic expansion. 
+autoload -U colors && colors
+source $ZSH/themes/robbyrussell.zsh-theme
+
+## Alias
+alias history="history 0"
+alias sudo="sudo "
+alias vim="nvim"
+
+setopt autocd beep extendedglob notify
+unsetopt nomatch
+bindkey -v
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
 zstyle :compinstall filename '~/.zshrc'
 
 autoload -Uz compinit
 compinit
-# End of lines added by compinstall
+## End of lines added by compinstall

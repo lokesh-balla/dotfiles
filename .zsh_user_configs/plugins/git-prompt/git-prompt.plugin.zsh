@@ -279,3 +279,4 @@ function git_repo_name() {
     echo ${repo_path:t}
   fi
 }
+
