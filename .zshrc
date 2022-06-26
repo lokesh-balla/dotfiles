@@ -55,16 +55,39 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 
 ## Load Plugins
-for plugin ($ZSH/plugins/*/*.plugin.zsh); do
-  source $plugin
+plugins=(git-prompt zsh-syntax-highlighting zsh-autosuggestions colored-man-pages)
+
+is_plugin() {
+  local base_dir=$1
+  local name=$2
+  builtin test -f $base_dir/plugins/$name/$name.plugin.zsh \
+    || builtin test -f $base_dir/plugins/$name/_$name
+}
+
+for plugin ($plugins); do
+  if is_plugin "$ZSH" "$plugin"; then
+    source $ZSH/plugins/$plugin/$plugin.plugin.zsh
+  else
+    echo "plugin '$plugin' not found"
+  fi
 done
 
 ## Load Theme
 setopt PROMPT_SUBST # the prompt string is first subjected to parameter expansion, command substitution and arithmetic expansion. 
 autoload -U colors && colors
-source $ZSH/themes/robbyrussell.zsh-theme
+source $ZSH/themes/default.zsh-theme
 
 ## Alias
 alias history="history 0"
 alias sudo="sudo "
 alias vim="nvim"
+
+#################################################################
+################## Additonal User Config Below ##################
+#################################################################
+
+## Setting alias for kitty terminal
+if [ "$TERM" == "xterm-kitty" ]
+then
+	alias ssh="kitty +kitten ssh"
+fi
