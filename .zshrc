@@ -34,6 +34,9 @@ if [ -x /usr/bin/dircolors ]; then
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
 fi
+if [[ $OSTYPE == 'darwin'* ]]; then
+	  export CLICOLOR=1
+fi
 
 ## Completion Configs
 unsetopt menu_complete   # do not autoselect the first completion entry
