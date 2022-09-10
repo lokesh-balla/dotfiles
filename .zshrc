@@ -21,6 +21,11 @@ bindkey -e
 # The following lines were added by compinstall
 zstyle :compinstall filename '~/.zshrc'
 
+if type brew &>/dev/null
+then
+  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+fi
+
 autoload -Uz compinit
 compinit
 # End of lines added by compinstall
@@ -35,7 +40,8 @@ if [ -x /usr/bin/dircolors ]; then
     alias egrep='egrep --color=auto'
 fi
 if [[ $OSTYPE == 'darwin'* ]]; then
-	  export CLICOLOR=1
+	export CLICOLOR=1
+	export LSCOLORS="ExGxFxdaCxDaDahbadacec"
 fi
 
 ## Completion Configs
@@ -83,7 +89,6 @@ source $ZSH/themes/default.zsh-theme
 ## Alias
 alias history="history 0"
 alias sudo="sudo "
-alias vim="nvim"
 
 #################################################################
 ################## Additonal User Config Below ##################
@@ -93,4 +98,6 @@ alias vim="nvim"
 if [ "$TERM" == "xterm-kitty" ]
 then
 	alias ssh="kitty +kitten ssh"
+	alias icat="kitty +kitten icat"
+	alias diff="kitty +kitten diff"
 fi
