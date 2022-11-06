@@ -91,16 +91,14 @@ alias history="history 0"
 alias sudo="sudo "
 
 # use bat if bat is available
-if [ command -v bat &> /dev/null ]; then
+if command -v bat &> /dev/null
+then
   alias cat="bat --plain --paging=never"
 fi
-if [ command -v batcat &> /dev/null ]; then
+if command -v batcat &> /dev/null
+then
   alias cat="batcat --plain --paging=never"
 fi
-
-#################################################################
-################## Additonal User Config Below ##################
-#################################################################
 
 ## Setting alias for kitty terminal
 if [ "$TERM" == "xterm-kitty" ]
@@ -109,3 +107,7 @@ then
 	alias icat="kitty +kitten icat"
 	alias diff="kitty +kitten diff"
 fi
+
+#################################################################
+################## Additonal User Config Below ##################
+#################################################################
