@@ -19,4 +19,7 @@ ZSH_THEME_GIT_PROMPT_STASHED="%{$fg[blue]%}⚑"
 ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%}✔"
 
 PROMPT='%B%~%b %F{red}❯%F{green}❯%F{blue}❯%f '
+if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+  PROMPT='%n@%m:%B%~%b %F{red}❯%F{green}❯%F{blue}❯%f '
+fi
 RPROMPT='$(gitprompt)'

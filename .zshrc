@@ -90,6 +90,14 @@ source $ZSH/themes/default.zsh-theme
 alias history="history 0"
 alias sudo="sudo "
 
+# use bat if bat is available
+if [ command -v bat &> /dev/null ]; then
+  alias cat="bat --plain --paging=never"
+fi
+if [ command -v batcat &> /dev/null ]; then
+  alias cat="batcat --plain --paging=never"
+fi
+
 #################################################################
 ################## Additonal User Config Below ##################
 #################################################################
