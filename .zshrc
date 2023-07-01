@@ -29,6 +29,8 @@ autoload -Uz compinit
 compinit
 # End of lines added by compinstall
 
+asdfd
+
 ## enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
   test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
@@ -84,7 +86,7 @@ done
 ## Load Theme
 setopt PROMPT_SUBST # the prompt string is first subjected to parameter expansion, command substitution and arithmetic expansion.
 autoload -U colors && colors
-source $ZSH/themes/default.zsh-theme
+source $ZSH/themes/multiline.zsh-theme
 
 ## Alias
 alias history="history 0"
