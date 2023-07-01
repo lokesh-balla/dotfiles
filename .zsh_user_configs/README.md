@@ -1,7 +1,7 @@
 # Clone the following repos in this directory
 
 ```bash
-$ mkdir -p ~/.zsh_user_configs && mkdir -p ~/.zsh_user_configs/themes && mkdir -p ~/.zsh_user_configs/plugins
+mkdir -p ~/.zsh_user_configs && mkdir -p ~/.zsh_user_configs/themes && mkdir -p ~/.zsh_user_configs/plugins
 ```
 
 ```bash
