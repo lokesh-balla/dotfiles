@@ -84,7 +84,7 @@ done
 ## Load Theme
 setopt PROMPT_SUBST # the prompt string is first subjected to parameter expansion, command substitution and arithmetic expansion.
 autoload -U colors && colors
-source $ZSH/themes/multiline.zsh-theme
+source $ZSH/themes/default.zsh-theme
 
 ## Alias
 alias history="history 0"

@@ -26,10 +26,7 @@ cp ${download_path}/.zshrc ${HOME}/.zshrc
 cp -r ${download_path}/.zsh_user_configs ${HOME}/.zsh_user_configs
 
 # Download all the configs 
-sh ${HOME}/.zsh_user_configs/update_plugins.sh
+zsh ${HOME}/.zsh_user_configs/update_plugins.sh
 
 # Clean Up
 rm -rf ${download_path}
-
-# Setting ZSH as default shell
-chsh -s $(which zsh)
