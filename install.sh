@@ -1,6 +1,6 @@
 #!/bin/zsh
 
-if command -v git &>/dev/null; then
+if ! command -v git &>/dev/null; then
 	echo " GIT is required for installtion"
 	exit 1
 fi

@@ -3,5 +3,5 @@
 ## Installing the ZSH configuration
 
 ```bash
-curl -sL https://raw.githubusercontent.com/Lokesh-Balla/dotfiles/main/install.sh | sh - 
+curl -sL https://raw.githubusercontent.com/Lokesh-Balla/dotfiles/master/install.sh | sh - 
 ```
