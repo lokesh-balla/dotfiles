@@ -92,7 +92,7 @@ alias sudo="sudo "
 
 # use bat if bat is available
 if command -v bat &>/dev/null; then
-  alias cat="bat --plain --paging=never"
+  alias cat='bat --style="header-filename,header-filesize,grid" --paging="never"'
 fi
 
 # use neovim as vim or vi when available
