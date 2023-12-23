@@ -1,55 +1,91 @@
-vim.opt.termguicolors = true
-
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
-	vim.fn.system({
-		"git",
-		"clone",
-		"--filter=blob:none",
-		"https://github.com/folke/lazy.nvim.git",
-		"--branch=stable", -- latest stable release
-		lazypath,
-	})
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable", -- latest stable release
+    lazypath,
+  })
 end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
+ 
+    -- Detect tabstop and shiftwidth automatically
+    'tpope/vim-sleuth',   
 
-	-- catppuccin theme
-	{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
-
-	-- lualine
-	{
+    -- LuaLine as status line
+    {
 		'nvim-lualine/lualine.nvim',
 		dependencies = { 'nvim-tree/nvim-web-devicons' }
 	},
 
-	-- telescope fuzzy find
+  -- telescope fuzzy find
 	{
-		'nvim-telescope/telescope.nvim', tag = '0.1.4',
+		'nvim-telescope/telescope.nvim', tag = '0.1.5',
 		dependencies = {
 			'nvim-lua/plenary.nvim',
 			'nvim-telescope/telescope-symbols.nvim',
-			{ 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
+			{ 
+        -- only try compilation if make is available in system
+        'nvim-telescope/telescope-fzf-native.nvim', 
+        build = 'make',
+        cond = function()
+          return vim.fn.executable 'make' == 1
+        end,  
+      },
 		},
 	},
 
-	-- treesitter
-	{ "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
+  -- TreeSitter for syntax highlighting
+  {"nvim-treesitter/nvim-treesitter", build = ":TSUpdate"},
 
-	-- git signs
-	{ "lewis6991/gitsigns.nvim" },
+  -- LSP Configuration & Plugins
+  {
+    'neovim/nvim-lspconfig',
+    dependencies = {
+      -- Automatically install LSPs to stdpath for neovim
+      'williamboman/mason.nvim',
+      'williamboman/mason-lspconfig.nvim',
 
-	-- lsp-zero for lsp and code completion
-	{'williamboman/mason.nvim'},
-	{'williamboman/mason-lspconfig.nvim'},
-	{'VonHeikemen/lsp-zero.nvim', branch = 'v3.x'},
-	{'neovim/nvim-lspconfig'},
-	{'hrsh7th/cmp-nvim-lsp'},
-	{'hrsh7th/nvim-cmp'},
-	{'L3MON4D3/LuaSnip'},
+      -- Useful status updates for LSP
+      -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
+      { 'j-hui/fidget.nvim', opts = {} },
 
-	-- code suggestions for nvim lua config
-	{ "folke/neodev.nvim" },
+      -- Additional lua configuration, makes nvim stuff amazing!
+      'folke/neodev.nvim',
+    },
+  },
 
+  -- Autocompletion
+  {
+    'hrsh7th/nvim-cmp',
+    dependencies = {
+      -- Snippet Engine & its associated nvim-cmp source
+      'L3MON4D3/LuaSnip',
+      'saadparwaiz1/cmp_luasnip',
+
+      -- Adds LSP completion capabilities
+      'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-path',
+
+      -- Adds a number of user-friendly snippets
+      'rafamadriz/friendly-snippets',
+    },
+  },
+  { 
+    'lewis6991/gitsigns.nvim',
+    opts = {
+      signs = {
+        add = { text = '+' },
+        change = { text = '~' },
+        delete = { text = '_' },
+        topdelete = { text = '‾' },
+        changedelete = { text = '~' },
+      },
+    },
+  },
+  { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
 })

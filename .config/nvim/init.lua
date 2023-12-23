@@ -1,2 +1,2 @@
-require('remap')
+require('core')
 require('plugin')
