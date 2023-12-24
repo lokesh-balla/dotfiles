@@ -1,31 +1,31 @@
 -- Configure Mason First
 require("mason").setup({
-    ui = {
-        icons = {
-            package_installed = "✓",
-            package_pending = "➜",
-            package_uninstalled = "✗"
-        }
+  ui = {
+    icons = {
+      package_installed = "✓",
+      package_pending = "➜",
+      package_uninstalled = "✗"
     }
+  }
 })
 
 local servers = {
-    lua_ls = {
-      Lua = {
-        workspace = { checkThirdParty = false },
-        telemetry = { enable = false },
-      },
+  lua_ls = {
+    Lua = {
+      workspace = { checkThirdParty = false },
+      telemetry = { enable = false },
     },
+  },
 }
 
 require('mason-lspconfig').setup({
-    ensure_installed = servers,
-    handlers = {
-      default_setup,
-      lua_ls = function()
-        require('lspconfig').lua_ls.setup({})
-      end,
-    },
+  ensure_installed = servers,
+  handlers = {
+    default_setup,
+    lua_ls = function()
+      require('lspconfig').lua_ls.setup({})
+    end,
+  },
 })
 
 -- Setup neovim lua configuration
@@ -70,12 +70,12 @@ local on_attach = function(_, bufnr)
 end
 
 require('mason-lspconfig').setup_handlers({
-    function(server_name)
-      require('lspconfig')[server_name].setup {
-        capabilities = capabilities,
-        on_attach = on_attach,
-        settings = servers[server_name],
-        filetypes = (servers[server_name] or {}).filetypes,
-      }
-    end,
+  function(server_name)
+    require('lspconfig')[server_name].setup {
+      capabilities = capabilities,
+      on_attach = on_attach,
+      settings = servers[server_name],
+      filetypes = (servers[server_name] or {}).filetypes,
+    }
+  end,
 })

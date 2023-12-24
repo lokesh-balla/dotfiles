@@ -6,7 +6,7 @@ require('lualine').setup {
 		section_separators = { left = '', right = ''},
 		tabline_separator = { left= '|', right= '|' },
 		disabled_filetypes = {
-			statusline = {'netrw'},
+		statusline = {'netrw'},
 			winbar = {},
 		},
 		ignore_focus = {},
