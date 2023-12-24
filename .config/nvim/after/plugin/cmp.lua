@@ -1,5 +1,33 @@
 local cmp = require'cmp'
 
+local symbol_map = {
+  Text = "󰉿",
+  Method = "󰆧",
+  Function = "󰊕",
+  Constructor = "",
+  Field = "󰜢",
+  Variable = "󰀫",
+  Class = "󰠱",
+  Interface = "",
+  Module = "",
+  Property = "󰜢",
+  Unit = "󰑭",
+  Value = "󰎠",
+  Enum = "",
+  Keyword = "󰌋",
+  Snippet = "",
+  Color = "󰏘",
+  File = "󰈙",
+  Reference = "󰈇",
+  Folder = "󰉋",
+  EnumMember = "",
+  Constant = "󰏿",
+  Struct = "󰙅",
+  Event = "",
+  Operator = "󰆕",
+  TypeParameter = "",
+}
+
 cmp.setup({
   snippet = {
     expand = function(args)
@@ -9,9 +37,21 @@ cmp.setup({
   completion = {
     completeopt = 'menu,menuone,noinsert',
   },
+  formatting = {
+    fields = {'menu', 'abbr', 'kind'},
+
+    expandable_indicator = false,
+
+    format = function (entry, item)
+      item.kind = ' ' .. symbol_map[item.kind] .. ' ' .. item.kind .. ' '
+
+      return item
+    end
+  },
   window = {
-    -- completion = cmp.config.window.bordered(),
-    -- documentation = cmp.config.window.bordered(),
+    completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
+    scrollbar = true,
   },
   mapping = cmp.mapping.preset.insert({
     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
