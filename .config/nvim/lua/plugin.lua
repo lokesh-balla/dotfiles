@@ -12,32 +12,46 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require("lazy").setup({
- 
-    -- Detect tabstop and shiftwidth automatically
-    'tpope/vim-sleuth',   
 
-    -- LuaLine as status line
-    {
-		'nvim-lualine/lualine.nvim',
-		dependencies = { 'nvim-tree/nvim-web-devicons' }
-	},
+  -- which key for help
+  {
+    "folke/which-key.nvim",
+    event = "VeryLazy",
+    init = function()
+      vim.o.timeout = true
+      vim.o.timeoutlen = 500
+    end,
+    opts = {}
+  },
+
+  -- comments 
+  { 'numToStr/Comment.nvim', opts = {}, lazy = false },
+
+  -- Detect tabstop and shiftwidth automatically
+  'tpope/vim-sleuth',
+
+  -- LuaLine as status line
+  {
+    'nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' }
+  },
 
   -- telescope fuzzy find
-	{
-		'nvim-telescope/telescope.nvim', tag = '0.1.5',
-		dependencies = {
-			'nvim-lua/plenary.nvim',
-			'nvim-telescope/telescope-symbols.nvim',
-			{ 
+  {
+    'nvim-telescope/telescope.nvim', tag = '0.1.5',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      'nvim-telescope/telescope-symbols.nvim',
+      {
         -- only try compilation if make is available in system
-        'nvim-telescope/telescope-fzf-native.nvim', 
+        'nvim-telescope/telescope-fzf-native.nvim',
         build = 'make',
         cond = function()
           return vim.fn.executable 'make' == 1
-        end,  
+        end,
       },
-		},
-	},
+    },
+  },
 
   -- TreeSitter for syntax highlighting
   {"nvim-treesitter/nvim-treesitter", build = ":TSUpdate"},
@@ -52,7 +66,16 @@ require("lazy").setup({
 
       -- Useful status updates for LSP
       -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      { 'j-hui/fidget.nvim', opts = {} },
+      {
+        'j-hui/fidget.nvim',
+        opts = {
+          notification = {
+            window = {
+              winblend = 0,
+            },
+          },
+        },
+      },
 
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
@@ -75,7 +98,8 @@ require("lazy").setup({
       'rafamadriz/friendly-snippets',
     },
   },
-  { 
+
+  {
     'lewis6991/gitsigns.nvim',
     opts = {
       signs = {
@@ -89,4 +113,21 @@ require("lazy").setup({
   },
 
   { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+
+  -- GoLang Plugin 
+  {
+    "ray-x/go.nvim",
+    dependencies = {  -- optional packages
+      "ray-x/guihua.lua",
+      "neovim/nvim-lspconfig",
+      "nvim-treesitter/nvim-treesitter",
+    },
+    config = function()
+      require("go").setup()
+    end,
+    event = {"CmdlineEnter"},
+    ft = {"go", 'gomod', 'gosum'},
+    build = ':lua require("go.install").update_all_sync()' -- if you need to install/update all binaries
+  },
+
 })
