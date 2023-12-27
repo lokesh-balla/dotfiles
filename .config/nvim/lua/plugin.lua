@@ -99,6 +99,9 @@ require("lazy").setup({
     },
   },
 
+  -- debug adapter
+  { "rcarriga/nvim-dap-ui", dependencies = {"mfussenegger/nvim-dap"} },
+
   {
     'lewis6991/gitsigns.nvim',
     opts = {
@@ -130,4 +133,5 @@ require("lazy").setup({
     opts = {},
   },
 
+  { 'leoluz/nvim-dap-go' },
 })
