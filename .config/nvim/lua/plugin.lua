@@ -24,6 +24,16 @@ require("lazy").setup({
     opts = {}
   },
 
+  -- pop up notifications with noice
+  {
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "rcarriga/nvim-notify",
+    }
+  },
+
   -- comments 
   { 'numToStr/Comment.nvim', opts = {}, lazy = false },
 
@@ -63,19 +73,6 @@ require("lazy").setup({
       -- Automatically install LSPs to stdpath for neovim
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
-
-      -- Useful status updates for LSP
-      -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-      {
-        'j-hui/fidget.nvim',
-        opts = {
-          notification = {
-            window = {
-              winblend = 0,
-            },
-          },
-        },
-      },
 
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
@@ -134,4 +131,5 @@ require("lazy").setup({
   },
 
   { 'leoluz/nvim-dap-go' },
+
 })

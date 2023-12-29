@@ -4,8 +4,8 @@ require("catppuccin").setup({
 		light = "latte",
 		dark = "mocha",
 	},
-	transparent_background = true, -- disables setting the background color.
-	show_end_of_buffer = false, -- shows the '~' characters after the end of buffers
+	transparent_background = false, -- disables setting the background color.
+	show_end_of_buffer = true, -- shows the '~' characters after the end of buffers
 	term_colors = false, -- sets terminal colors (e.g. `g:terminal_color_0`)
 	dim_inactive = {
 		enabled = false, -- dims the background color of inactive window
@@ -29,14 +29,37 @@ require("catppuccin").setup({
 		types = {},
 		operators = {},
 	},
-	color_overrides = {},
+	color_overrides = {
+		mocha = {
+			base = "#000000",
+		},
+	},
 	custom_highlights = {},
 	integrations = {
+		markdown = true,
 		cmp = true,
+		dap = true,
+		dap_ui = true,
 		gitsigns = true,
-		nvimtree = true,
+		notify = true,
+		noice = true,
+		mason = true,
 		treesitter = true,
-		notify = false,
+		telescope = true,
+		which_key = true,
+		lsp_trouble = true,
+		native_lsp = {
+			enabled = true,
+			underlines = {
+				errors = { "underline" },
+				hints = { "underline" },
+				warnings = { "underline" },
+			information = { "underline" },
+			},
+			inlay_hints = {
+				background = true,
+			},
+		},
 		mini = {
 			enabled = true,
 			indentscope_color = "",
