@@ -1,5 +1,4 @@
 require('notify').setup({
-  background_colour = "#000000",
   render = "default",
   timeout = 3000,
 })
@@ -14,10 +13,10 @@ require('noice').setup({
   },
   cmdline = {
     enabled = true,
-    view = "cmdline",
+    view = "cmdline_popup",
   },
   presets = {
-    bottom_search = true,
+    bottom_search = false,
     command_palette = true,
     long_message_to_split = true,
     inc_rename = true,
