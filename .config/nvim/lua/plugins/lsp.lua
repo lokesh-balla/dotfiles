@@ -40,12 +40,7 @@ return {
 
             require('mason-lspconfig').setup({
                 ensure_installed = servers,
-                handlers = {
-                    default_setup,
-                    lua_ls = function()
-                        require('lspconfig').lua_ls.setup({})
-                    end
-                }
+                handlers = {}
             })
 
             -- Setup neovim lua configuration

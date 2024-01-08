@@ -15,20 +15,25 @@ return {
     {
         "nvim-treesitter/nvim-treesitter",
         build = ":TSUpdate",
-        opts = {
-            ensure_installed = { "c", "cpp", "lua", "vim", "vimdoc", "query", "go", "gomod", "gosum", "gowork", "html",
-                "css", "javascript", "python", "rust", "dart", "bash", "dockerfile", "markdown",
-                "markdown_inline", "regex" },
+        config = function()
+            require("nvim-treesitter.configs").setup({
+                ensure_installed = { "c", "cpp", "lua", "vim", "vimdoc", "query", "go", "gomod", "gosum", "gowork",
+                    "html",
+                    "css", "javascript", "python", "rust", "dart", "bash", "dockerfile", "markdown",
+                    "markdown_inline", "regex" },
+                sync_install = false,
+                auto_install = false,
+                ignore_install = {},
+                highlight = {
+                    enable = true,
+                    use_languagetree = true
+                },
 
-            highlight = {
-                enable = true,
-                use_languagetree = true
-            },
-
-            indent = {
-                enable = true
-            }
-        }
+                indent = {
+                    enable = true
+                }
+            })
+        end
     },
 
 
@@ -54,4 +59,3 @@ return {
         end
     },
 }
-
