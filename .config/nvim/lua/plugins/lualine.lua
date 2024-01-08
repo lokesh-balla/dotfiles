@@ -19,7 +19,7 @@ return {
                     right = '|'
                 },
                 disabled_filetypes = {
-                    statusline = { 'netrw' },
+                    statusline = { 'netrw', 'NvimTree' },
                     winbar = {}
                 },
                 ignore_focus = {},

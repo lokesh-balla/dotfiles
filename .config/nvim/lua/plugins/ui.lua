@@ -11,6 +11,41 @@ return {
         opts = {}
     },
 
+    -- nvim-tree for file explorer
+    {
+        "nvim-tree/nvim-tree.lua",
+        dependencies = {
+            "nvim-tree/nvim-web-devicons",
+        },
+        config = function()
+            require('nvim-tree').setup({
+                sort = {
+                    sorter = "case_sensitive",
+                },
+                update_focused_file = {
+                    enable = true,
+                },
+                view = {
+                    width = 30,
+                },
+                renderer = {
+                    group_empty = true,
+                },
+                filters = {
+                    dotfiles = true,
+                },
+            })
+
+            -- keymaps
+            vim.keymap.set('n', '<leader>tt', '<Cmd>NvimTreeToggle<CR>', {
+                desc = '[T]oggle [T]ree'
+            })
+            vim.keymap.set('n', '<leader>tf', '<Cmd>NvimTreeFocus<CR>', {
+                desc = '[T]oogle tree [F]ocus'
+            })
+        end
+    },
+
     -- treesitter for syntax highlighting
     {
         "nvim-treesitter/nvim-treesitter",
