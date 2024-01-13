@@ -49,3 +49,8 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   group = highlight_group,
   pattern = '*',
 })
+
+-- custom keybinding for vim defaults
+vim.keymap.set({ 'n', 'i', 'v', 'x' }, '<S-Tab>', '<Esc>', {
+  desc = 'Escape'
+})

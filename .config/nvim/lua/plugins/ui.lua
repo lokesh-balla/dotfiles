@@ -71,8 +71,6 @@ return {
         end
     },
 
-
-
     -- trouble for diagnostics
     {
         "folke/trouble.nvim",
@@ -92,5 +90,14 @@ return {
             vim.keymap.set("n", "gR", function() require("trouble").toggle("lsp_references") end,
                 { desc = 'Toggle LSP References' })
         end
+    },
+
+    -- indentscope for highlighting selected scope
+    {
+        "lukas-reineke/indent-blankline.nvim",
+        main = "ibl",
+        opts = {
+            scope = { enabled = false },
+        },
     },
 }
