@@ -39,6 +39,10 @@ vim.o.completeopt = 'menuone,noselect'
 -- Enables 24-bit RGB colors (should be supported by terminal as well)
 vim.o.termguicolors = true
 
+-- tabstop and shiftwidth
+vim.o.tabstop = 4
+vim.o.shiftwidth = 4
+
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
