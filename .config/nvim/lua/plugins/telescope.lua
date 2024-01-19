@@ -15,7 +15,22 @@ return {
             },
         },
         config = function()
-            require('telescope').setup({
+            require("telescope").setup({
+                pickers = {
+                    find_files = {
+                        find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
+                    },
+                    live_grep = {
+                        additional_args = function()
+                            return { "--hidden", "--glob", "!**/.git/*" }
+                        end
+                    },
+                    grep_string = {
+                        additional_args = function()
+                            return { "--hidden", "--glob", "!**/.git/*" }
+                        end
+                    }
+                },
                 extensions = {
                     fzf = {
                         fuzzy = true,
@@ -38,7 +53,6 @@ return {
             vim.keymap.set('n', '<leader>/', function()
                 require('telescope.builtin').current_buffer_fuzzy_find(
                     require('telescope.themes').get_dropdown {
-                        winblend = 10,
                         previewer = false
                     })
             end, {
