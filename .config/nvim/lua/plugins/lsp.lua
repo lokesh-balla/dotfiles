@@ -1,3 +1,35 @@
+-- LSP Server configurations
+--      The configuration is in format
+--      <mason_server_name> = {
+--          <all_the_lsp_configuration>
+--      }
+local servers = {
+    lua_ls = {
+        Lua = {
+            workspace = {
+                checkThirdParty = false
+            },
+            telemetry = {
+                enable = false
+            }
+        }
+    },
+    gopls = {
+        gopls = {
+            analyses = {
+                unusedparams = true
+            },
+            staticcheck = true,
+            gofumpt = true
+        }
+    }
+}
+
+local lsp_servers_to_install = {}
+for server_name, _ in pairs(servers) do
+    table.insert(lsp_servers_to_install, server_name)
+end
+
 return {
     {
         'neovim/nvim-lspconfig',
@@ -16,31 +48,6 @@ return {
                         package_uninstalled = "✗"
                     }
                 }
-            })
-
-            local servers = {
-                lua_ls = {
-                    Lua = {
-                        workspace = {
-                            checkThirdParty = false
-                        },
-                        telemetry = {
-                            enable = false
-                        }
-                    }
-                },
-                gopls = {
-                    analyses = {
-                        unusedparams = true
-                    },
-                    staticcheck = true,
-                    gofumpt = true
-                }
-            }
-
-            require('mason-lspconfig').setup({
-                ensure_installed = servers,
-                handlers = {}
             })
 
             -- Setup neovim lua configuration
@@ -90,14 +97,19 @@ return {
                 })
             end
 
-            require('mason-lspconfig').setup_handlers({ function(server_name)
-                require('lspconfig')[server_name].setup {
-                    capabilities = capabilities,
-                    on_attach = on_attach,
-                    settings = servers[server_name],
-                    filetypes = (servers[server_name] or {}).filetypes
+            require('mason-lspconfig').setup({
+                ensure_installed = lsp_servers_to_install,
+                handlers = {
+                    function(server_name)
+                        require('lspconfig')[server_name].setup {
+                            capabilities = capabilities,
+                            on_attach = on_attach,
+                            settings = servers[server_name],
+                            filetypes = (servers[server_name] or {}).filetypes
+                        }
+                    end
                 }
-            end })
+            })
         end
     },
 }

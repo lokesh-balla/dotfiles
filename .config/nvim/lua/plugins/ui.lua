@@ -96,6 +96,18 @@ return {
         end
     },
 
+    -- fidget to show progress
+    {
+        "j-hui/fidget.nvim",
+        opts = {
+            integration = {
+                ["nvim-tree"] = {
+                    enable = true, -- Integrate with nvim-tree/nvim-tree.lua (if installed)
+                },
+            },
+        },
+    },
+
     -- treesitter for syntax highlighting
     {
         "nvim-treesitter/nvim-treesitter",
