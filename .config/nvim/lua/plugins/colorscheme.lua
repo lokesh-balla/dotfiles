@@ -1,75 +1,75 @@
 return {
     {
-        'rose-pine/neovim',
-        name = 'rose-pine',
+        "catppuccin/nvim",
+        name = "catppuccin",
+        priority = 1000,
         config = function()
-            require('rose-pine').setup({
-                variant = "auto", -- auto, main, moon, or dawn
-                dark_variant = "main", -- main, moon, or dawn
-                dim_inactive_windows = false,
-                extend_background_behind_borders = true,
-
-                styles = {
-                    bold = true,
-                    italic = true,
-                    transparency = false,
+            require("catppuccin").setup({
+                flavour = "mocha", -- latte, frappe, macchiato, mocha
+                background = {     -- :h background
+                    light = "latte",
+                    dark = "mocha",
                 },
-
-                groups = {
-                    border = "muted",
-                    link = "iris",
-                    panel = "surface",
-
-                    error = "love",
-                    hint = "iris",
-                    info = "foam",
-                    warn = "gold",
-
-                    git_add = "foam",
-                    git_change = "rose",
-                    git_delete = "love",
-                    git_dirty = "rose",
-                    git_ignore = "muted",
-                    git_merge = "iris",
-                    git_rename = "pine",
-                    git_stage = "iris",
-                    git_text = "rose",
-                    git_untracked = "subtle",
-
-                    headings = {
-                        h1 = "iris",
-                        h2 = "foam",
-                        h3 = "rose",
-                        h4 = "gold",
-                        h5 = "pine",
-                        h6 = "foam",
+                styles = {                   -- Handles the styles of general hi groups (see `:h highlight-args`):
+                    comments = { "italic" }, -- Change the style of comments
+                    conditionals = { "italic" },
+                    loops = {},
+                    functions = {},
+                    keywords = {},
+                    strings = {},
+                    variables = {},
+                    numbers = {},
+                    booleans = {},
+                    properties = {},
+                    types = {},
+                    operators = {},
+                },
+                color_overrides = {
+                    mocha = {
+                        base = "#000000",
+                        mantle = "#131313",
+                        crust = "#101010",
                     },
-                    -- Alternatively, set all headings at once.
-                    -- headings = "subtle",
                 },
-
-                highlight_groups = {
-                    -- Comment = { fg = "foam" },
-                    -- VertSplit = { fg = "muted", bg = "muted" },
+                integrations = {
+                    cmp = true,
+                    gitsigns = true,
+                    nvimtree = true,
+                    treesitter = true,
+                    fidget = false,
+                    mason = true,
+                    dap = true,
+                    dap_ui = true,
+                    lsp_trouble = true,
+                    telescope = { enabled = true },
+                    which_key = true,
+                    native_lsp = {
+                        enabled = true,
+                        virtual_text = {
+                            errors = { "italic" },
+                            hints = { "italic" },
+                            warnings = { "italic" },
+                            information = { "italic" },
+                        },
+                        underlines = {
+                            errors = { "underline" },
+                            hints = { "underline" },
+                            warnings = { "underline" },
+                            information = { "underline" },
+                        },
+                        inlay_hints = {
+                            background = true,
+                        },
+                    },
+                    mini = {
+                        enabled = true,
+                        indentscope_color = "",
+                    },
                 },
-
-                before_highlight = function(group, highlight, palette)
-                    -- Disable all undercurls
-                    -- if highlight.undercurl then
-                    --     highlight.undercurl = false
-                    -- end
-                    --
-                    -- Change palette colour
-                    -- if highlight.fg == palette.pine then
-                    --     highlight.fg = palette.foam
-                    -- end
-                end,
             })
 
-            vim.cmd('colorscheme rose-pine')
-            -- vim.cmd('colorscheme rose-pine-main')
-            -- vim.cmd('colorscheme rose-pine-moon')
-            -- vim.cmd('colorscheme rose-pine-dawn')
+            -- setup must be called before loading
+            vim.cmd.colorscheme "catppuccin"
         end
-    },
+    }
 }
