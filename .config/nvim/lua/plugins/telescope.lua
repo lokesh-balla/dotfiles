@@ -16,6 +16,16 @@ return {
         },
         config = function()
             require("telescope").setup({
+                defaults = {
+                    layout_config = {
+                        horizontal = { prompt_position = "bottom", preview_width = 0.65 },
+                        vertical = { mirror = false },
+                        width = 0.90,
+                        height = 0.95,
+                        preview_cutoff = 120,
+                    },
+                    path_display = { "truncate" },
+                },
                 pickers = {
                     find_files = {
                         find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
