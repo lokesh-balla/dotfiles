@@ -3,6 +3,9 @@
 ## Installing GNU Stow
 
 ```bash
+# Arch Linux
+sudo pacman -Syu stow
+
 # Debian or Ubuntu
 sudo apt install stow
 
@@ -16,11 +19,23 @@ brew install stow
 ## Configuring neovim
 
 ```bash
-make config
+make nvim
 ```
 
 ## Removing config
 
 ```bash
-make clean
+make clean_nvim
+```
+
+## Configuring ZSH
+
+```bash
+make zshell
+```
+
+## Removing ZSH
+
+```bash
+make clean_zshell
 ```
