@@ -21,8 +21,8 @@ setopt HIST_VERIFY            # Don't execute immediately upon history expansion
 #####################################################################
 ## Aliases
 #####################################################################
-if [[ -r ${PWD}/aliasrc ]]; then
-    source ${PWD}/aliasrc
+if [[ -r ${ZSH}/aliasrc ]]; then
+    source ${ZSH}/aliasrc
 fi
 #####################################################################
 

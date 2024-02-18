@@ -1,4 +1,4 @@
-PROMPT_THEME="default"
+PROMPT_THEME="multiline"
 
 source "${HOME}/.zsh_user_configs/core"
 
