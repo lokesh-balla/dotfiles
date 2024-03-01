@@ -2,9 +2,8 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
--- disable netrw at the very start of your init.lua
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
+-- set netrw default style to tree
+vim.g.netrw_liststyle = 3
 
 -- Don't show the mode, since it's already in status line
 vim.opt.showmode = false
@@ -52,18 +51,18 @@ vim.opt.list = false
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
 -- Decrease update time to update swap file on disk
-vim.o.updatetime = 250
-vim.o.timeoutlen = 300
+vim.opt.updatetime = 250
+vim.opt.timeoutlen = 300
 
 -- Set completeopt to have a better completion experience
-vim.o.completeopt = 'menuone,noselect'
+vim.opt.completeopt = 'menuone,noselect'
 
 -- Enables 24-bit RGB colors (should be supported by terminal as well)
-vim.o.termguicolors = true
+vim.opt.termguicolors = true
 
 -- tabstop and shiftwidth
-vim.o.tabstop = 4
-vim.o.shiftwidth = 4
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
