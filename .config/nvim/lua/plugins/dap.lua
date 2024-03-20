@@ -2,7 +2,7 @@ return {
     -- debug adapter and ui
     {
         "rcarriga/nvim-dap-ui",
-        dependencies = { "mfussenegger/nvim-dap" },
+        dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
         config = function()
             local dap, dapui = require("dap"), require("dapui")
             dap.listeners.after.event_initialized["dapui_config"] = function()
@@ -24,6 +24,11 @@ return {
             vim.keymap.set('n', '<leader>B', function()
                 dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ')
             end, { desc = 'Debug: Set Breakpoint' })
+
+            local sign = vim.fn.sign_define
+            sign("DapBreakpoint", { text = "●", texthl = "DapBreakpoint", linehl = "", numhl = "" })
+            sign("DapBreakpointCondition", { text = "●", texthl = "DapBreakpointCondition", linehl = "", numhl = "" })
+            sign("DapLogPoint", { text = "◆", texthl = "DapLogPoint", linehl = "", numhl = "" })
         end
     },
 
