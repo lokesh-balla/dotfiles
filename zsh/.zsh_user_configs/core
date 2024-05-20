@@ -85,7 +85,10 @@ zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 #####################################################################
 ## Plugins
 #####################################################################
-plugins=(git-prompt zsh-syntax-highlighting zsh-autosuggestions colored-man-pages)
+plugins=(git-prompt zsh-syntax-highlighting zsh-autosuggestions zsh-completions colored-man-pages)
+
+# add zsh-completions to path
+FPATH="${ZSH}/plugins/zsh-completions/src:${FPATH}"
 
 is_plugin() {
   local base_dir=$1

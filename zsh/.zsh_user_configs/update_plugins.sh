@@ -13,6 +13,7 @@ repos=(
 	"https://github.com/woefe/git-prompt.zsh.git git-prompt"
 	"https://github.com/zsh-users/zsh-syntax-highlighting.git zsh-syntax-highlighting"
 	"https://github.com/zsh-users/zsh-autosuggestions.git zsh-autosuggestions"
+	"https://github.com/zsh-users/zsh-completions.git zsh-completions"
 	"https://github.com/ael-code/zsh-colored-man-pages.git colored-man-pages"
 )
 
