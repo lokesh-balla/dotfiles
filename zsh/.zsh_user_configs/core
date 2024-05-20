@@ -35,6 +35,29 @@ unsetopt autocd extendedglob nomatch
 bindkey -e
 #####################################################################
 
+#####################################################################
+## Plugins
+#####################################################################
+plugins=(git-prompt zsh-syntax-highlighting zsh-autosuggestions zsh-completions colored-man-pages)
+
+# add zsh-completions to path
+FPATH="${ZSH}/plugins/zsh-completions/src:${FPATH}"
+
+is_plugin() {
+  local base_dir=$1
+  local name=$2
+  builtin test -f $base_dir/plugins/$name/$name.plugin.zsh ||
+    builtin test -f $base_dir/plugins/$name/_$name
+}
+
+for plugin in "${plugins[@]}"; do
+  if is_plugin "${ZSH}" "${plugin}"; then
+    source ${ZSH}/plugins/${plugin}/${plugin}.plugin.zsh
+  else
+    echo "plugin '$plugin' not found"
+  fi
+done
+#####################################################################
 
 #####################################################################
 ## Completion
@@ -81,32 +104,6 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|=*' 'l:|=* r:|=*'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 #####################################################################
 
-
-#####################################################################
-## Plugins
-#####################################################################
-plugins=(git-prompt zsh-syntax-highlighting zsh-autosuggestions zsh-completions colored-man-pages)
-
-# add zsh-completions to path
-FPATH="${ZSH}/plugins/zsh-completions/src:${FPATH}"
-
-is_plugin() {
-  local base_dir=$1
-  local name=$2
-  builtin test -f $base_dir/plugins/$name/$name.plugin.zsh ||
-    builtin test -f $base_dir/plugins/$name/_$name
-}
-
-for plugin in "${plugins[@]}"; do
-  if is_plugin "${ZSH}" "${plugin}"; then
-    source ${ZSH}/plugins/${plugin}/${plugin}.plugin.zsh
-  else
-    echo "plugin '$plugin' not found"
-  fi
-done
-#####################################################################
-
-
 #####################################################################
 ## Prompt
 #####################################################################
@@ -119,7 +116,5 @@ fi
 
 source "${ZSH}/themes/${PROMPT_THEME}.zsh-theme"
 #####################################################################
-
-
 
 
