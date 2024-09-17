@@ -1,5 +1,10 @@
 # dotfiles
 
+## Removing Duplicates in ZSH Config
+```bash
+./remove_duplicates_zsh_history.sh ${HISTFILE}
+```
+
 ## Installing GNU Stow
 
 ```bash
