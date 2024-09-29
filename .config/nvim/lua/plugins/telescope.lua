@@ -3,7 +3,15 @@ return {
 	tag = '0.1.8',
 	dependencies = {
 		'nvim-lua/plenary.nvim',
-		'nvim-telescope/telescope-symbols.nvim'
+		'nvim-telescope/telescope-symbols.nvim',
+		{
+			-- only try compilation if make is available in system
+			'nvim-telescope/telescope-fzf-native.nvim',
+			build = 'make',
+			cond = function()
+				return vim.fn.executable 'make' == 1
+			end
+		},
 	},
 	config = function()
 		require("telescope").setup({
@@ -32,8 +40,17 @@ return {
 					end
 				}
 			},
-			extensions = {}
+			extensions = {
+				fzf = {
+					fuzzy = true,
+					override_generic_sorter = true,
+					override_file_sorter = true,
+					case_mode = "smart_case"
+				}
+			}
 		})
+
+		pcall(require('telescope').load_extension, 'fzf')
 
 		-- keybinds
 		vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, {
