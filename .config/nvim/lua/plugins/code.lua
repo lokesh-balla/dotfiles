@@ -3,10 +3,10 @@ return {
 	{
 		"folke/trouble.nvim",
 		event = "VeryLazy",
-		opts = {},
 		cmd = "Trouble",
 		config = function()
 			require('which-key').add({ "<leader>x", group = "Diagnostics" })
+			require('trouble').setup({})
 		end,
 		keys = {
 			{
