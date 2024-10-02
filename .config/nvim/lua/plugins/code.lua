@@ -5,6 +5,9 @@ return {
 		event = "VeryLazy",
 		opts = {},
 		cmd = "Trouble",
+		config = function()
+			require('which-key').add({ "<leader>x", group = "Diagnostics" })
+		end,
 		keys = {
 			{
 				"<leader>xx",
@@ -15,16 +18,6 @@ return {
 				"<leader>xX",
 				"<cmd>Trouble diagnostics toggle filter.buf=0<cr>",
 				desc = "Buffer Diagnostics (Trouble)",
-			},
-			{
-				"<leader>cs",
-				"<cmd>Trouble symbols toggle focus=false<cr>",
-				desc = "Symbols (Trouble)",
-			},
-			{
-				"<leader>cl",
-				"<cmd>Trouble lsp toggle focus=false win.position=right<cr>",
-				desc = "LSP Definitions / references / ... (Trouble)",
 			},
 			{
 				"<leader>xL",
@@ -50,19 +43,6 @@ return {
 	-- Detect tabstop and shiftwidth automatically
 	{ 'tpope/vim-sleuth',            event = 'VimEnter' },
 
-	-- show vcs diff
-	{
-		'echasnovski/mini.diff',
-		version = '*',
-		event = 'VeryLazy',
-		opts = {
-			view = {
-				style = 'sign',
-				signs = { add = '+', change = '~', delete = '-' },
-			},
-		},
-	},
-
 	-- split and join lines
 	{ 'echasnovski/mini.splitjoin',  version = '*',     event = 'VeryLazy', opts = {} },
 
@@ -70,5 +50,5 @@ return {
 	{ 'echasnovski/mini.cursorword', version = '*',     event = 'VeryLazy', opts = { delay = 500 } },
 
 	-- generate bracket pairs
-	{ 'echasnovski/mini.pairs',      version = '*',     event = 'VeryLazy' },
+	{ 'echasnovski/mini.pairs',      version = '*',     event = 'VeryLazy', opts = {} },
 }

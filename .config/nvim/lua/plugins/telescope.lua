@@ -68,6 +68,8 @@ return {
 			desc = '[/] Fuzzily search in current buffer'
 		})
 
+		require('which-key').add({ "<leader>s", group = "Telescope" })
+
 		local function telescope_live_grep_open_files()
 			require('telescope.builtin').live_grep {
 				grep_open_files = true,
@@ -80,8 +82,8 @@ return {
 		vim.keymap.set('n', '<leader>ss', require('telescope.builtin').builtin, {
 			desc = '[S]earch [S]elect Telescope'
 		})
-		vim.keymap.set('n', '<leader>gf', require('telescope.builtin').git_files, {
-			desc = 'Search [G]it [F]iles'
+		vim.keymap.set('n', '<leader>sG', require('telescope.builtin').git_files, {
+			desc = '[S]earch [G]it Files'
 		})
 		vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, {
 			desc = '[S]earch [F]iles'
