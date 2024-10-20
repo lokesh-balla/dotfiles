@@ -51,4 +51,60 @@ return {
 
 	-- generate bracket pairs
 	{ 'echasnovski/mini.pairs',      version = '*',     event = 'VeryLazy', opts = {} },
+
+	-- neotest for running test case
+	{
+		"nvim-neotest/neotest",
+		event = 'VeryLazy',
+		dependencies = {
+			"nvim-neotest/nvim-nio",
+			"nvim-lua/plenary.nvim",
+			"nvim-treesitter/nvim-treesitter",
+
+			"nvim-neotest/neotest-go",
+		},
+		config = function()
+			require('which-key').add({ "<leader>t", group = "Test", icon = "󱏷" })
+			require("neotest").setup({
+				icons = {
+					running_animated = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" },
+				},
+				adapters = {
+					require("neotest-go"),
+				},
+			})
+		end,
+		keys = {
+			{
+				"<leader>tr",
+				function() require("neotest").run.run() end,
+				desc = "[T]est [R]un"
+			},
+			{
+				"<leader>ts",
+				function() require("neotest").run.stop() end,
+				desc = "[T]est [S]top"
+			},
+			{
+				"<leader>tf",
+				function() require("neotest").run.run(vim.fn.expand("%")) end,
+				desc = "[T]est [F]ile"
+			},
+			{
+				"<leader>td",
+				function() require("neotest").run.run({ strategy = "dap" }) end,
+				desc = "[T]est [D]ebug nearest"
+			},
+			{
+				"<leader>tv",
+				function() require("neotest").summary.toggle() end,
+				desc = "[T]est [V]iew"
+			},
+			{
+				"<leader>to",
+				function() require("neotest").output_panel.toggle() end,
+				desc = "[T]est [O]utput panel"
+			}
+		}
+	}
 }
