@@ -67,6 +67,8 @@ return {
 			require('which-key').add({ "<leader>t", group = "Test", icon = "󱏷" })
 			require("neotest").setup({
 				icons = {
+					passed = "",
+					failed = "",
 					running_animated = { "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏" },
 				},
 				adapters = {
