@@ -1,20 +1,20 @@
 -- Set Leader
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 
 -- set netrw default style to tree
 vim.g.netrw_liststyle = 3
 
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 vim.opt.hlsearch = true
-vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
+vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
 -- Make line numbers default
 vim.wo.relativenumber = true
 vim.wo.number = true
 
 -- Enable mouse mode
-vim.opt.mouse = 'a'
+vim.opt.mouse = "a"
 
 -- Enable break indent
 vim.opt.breakindent = true
@@ -27,7 +27,7 @@ vim.o.ignorecase = true
 vim.o.smartcase = true
 
 -- Keep signcolumn on by default
-vim.wo.signcolumn = 'yes'
+vim.wo.signcolumn = "yes"
 
 -- Decrease update time
 vim.opt.updatetime = 250
@@ -42,14 +42,14 @@ vim.opt.cursorline = true
 
 -- Sets how neovim will display certain whitespace in the editor.
 vim.opt.list = true
-vim.opt.listchars = { tab = '» ', lead = '•', trail = '•', nbsp = '␣' }
+vim.opt.listchars = { tab = "» ", lead = "•", trail = "•", nbsp = "␣" }
 
 -- Decrease update time to update swap file on disk
 vim.opt.updatetime = 250
 vim.opt.timeoutlen = 300
 
 -- Set completeopt to have a better completion experience
-vim.opt.completeopt = 'menuone,noselect'
+vim.opt.completeopt = "menuone,noselect"
 
 -- Enables 24-bit RGB colors (should be supported by terminal as well)
 vim.opt.termguicolors = true
@@ -60,16 +60,16 @@ vim.opt.shiftwidth = 4
 
 -- [[ Highlight on yank ]]
 -- See `:help vim.highlight.on_yank()`
-local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
-vim.api.nvim_create_autocmd('TextYankPost', {
-  callback = function()
-    vim.highlight.on_yank()
-  end,
-  group = highlight_group,
-  pattern = '*',
+local highlight_group = vim.api.nvim_create_augroup("YankHighlight", { clear = true })
+vim.api.nvim_create_autocmd("TextYankPost", {
+	callback = function()
+		vim.highlight.on_yank()
+	end,
+	group = highlight_group,
+	pattern = "*",
 })
 
 -- custom keybinding for vim defaults
-vim.keymap.set({ 'n', 'i', 'v', 'x' }, '<S-Tab>', '<Esc>', {
-  desc = 'Escape'
+vim.keymap.set({ "n", "i", "v", "x" }, "<S-Tab>", "<Esc>", {
+	desc = "Escape",
 })

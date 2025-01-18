@@ -3,7 +3,9 @@ return {
 	{
 		"folke/which-key.nvim",
 		event = "VeryLazy",
-		opts = {},
+		opts = {
+			preset = "helix",
+		},
 		keys = {
 			{
 				"<leader>?",
@@ -52,17 +54,24 @@ return {
 				ignore_install = {},
 				highlight = {
 					enable = true,
-					use_languagetree = true
+					use_languagetree = true,
 				},
 				indent = {
-					enable = true
-				}
+					enable = true,
+				},
 			})
 
 			-- setting folding
 			vim.opt.foldmethod = "expr"
 			vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
 			vim.opt.foldenable = false
-		end
+		end,
+	},
+
+	-- markdown render
+	{
+		"MeanderingProgrammer/render-markdown.nvim",
+		dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" },
+		opts = {},
 	},
 }
