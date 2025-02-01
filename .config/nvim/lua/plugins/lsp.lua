@@ -19,6 +19,15 @@ local servers = {
 			analyses = {
 				unusedparams = true,
 			},
+			hints = {
+				assignVariableTypes = true,
+				compositeLiteralFields = true,
+				compositeLiteralTypes = true,
+				constantValues = true,
+				functionTypeParameters = true,
+				parameterNames = true,
+				rangeVariableTypes = true
+			},
 			staticcheck = true,
 			gofumpt = true,
 		},
@@ -36,7 +45,7 @@ return {
 		dependencies = {
 			"williamboman/mason.nvim",
 			"williamboman/mason-lspconfig.nvim",
-			"folke/neodev.nvim",
+			{ "folke/lazydev.nvim", ft = "lua", opts = {} }
 		},
 		config = function()
 			-- Configure Mason First
@@ -49,13 +58,9 @@ return {
 					},
 				},
 			})
-
-			-- Setup neovim lua configuration
-			require("neodev").setup()
-
 			-- nvim-cmp supports additional completion capabilities, so broadcast that to servers
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
-			capabilities = require("blink.cmp").get_lsp_capabilities(capabilities)
+			capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 			local on_attach = function(_, bufnr)
 				local nmap = function(keys, func, desc)
@@ -70,7 +75,7 @@ return {
 				end
 
 				require("which-key").add({ "<leader>c", group = "Code" })
-				nmap("<leader>cr", vim.lsp.buf.rename, "[L]SP [R]ename")
+				nmap("<leader>cr", vim.lsp.buf.rename, "[C]ode LSP [R]ename")
 				nmap("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
 
 				require("which-key").add({ "g", group = "Goto" })
@@ -86,16 +91,11 @@ return {
 
 				nmap("K", vim.lsp.buf.hover, "Hover Documentation")
 				nmap("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation")
-
-				vim.api.nvim_buf_create_user_command(bufnr, "Format", function(_)
-					vim.lsp.buf.format()
-				end, {
-					desc = "Format current buffer with LSP",
-				})
 			end
 
 			require("mason-lspconfig").setup({
 				ensure_installed = lsp_servers_to_install,
+				automatic_installation = false,
 				handlers = {
 					function(server_name)
 						require("lspconfig")[server_name].setup({
