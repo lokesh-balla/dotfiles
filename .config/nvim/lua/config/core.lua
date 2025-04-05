@@ -29,30 +29,9 @@ vim.o.smartcase = true
 -- Keep signcolumn on by default
 vim.wo.signcolumn = "yes"
 
--- Decrease update time
-vim.opt.updatetime = 250
-vim.opt.timeoutlen = 300
-
 -- Configure how new splits should be opened
 vim.opt.splitright = true
 vim.opt.splitbelow = true
-
--- Show which line your cursor is on
-vim.opt.cursorline = true
-
--- Sets how neovim will display certain whitespace in the editor.
-vim.opt.list = true
-vim.opt.listchars = { tab = "» ", lead = "•", trail = "•", nbsp = "␣" }
-
--- Decrease update time to update swap file on disk
-vim.opt.updatetime = 250
-vim.opt.timeoutlen = 300
-
--- Set completeopt to have a better completion experience
-vim.opt.completeopt = "menuone,noselect"
-
--- Enables 24-bit RGB colors (should be supported by terminal as well)
-vim.opt.termguicolors = true
 
 -- tabstop and shiftwidth
 vim.opt.tabstop = 4
