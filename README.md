@@ -23,6 +23,9 @@ brew install stow
 
 ## Configuring neovim
 
+> [!NOTE]
+> need to install fd & rg(ripgrep) first
+
 ```bash
 make nvim
 ```

@@ -41,16 +41,16 @@ return {
 	},
 
 	-- Detect tabstop and shiftwidth automatically
-	{ "tpope/vim-sleuth", event = "VimEnter" },
+	{ "tpope/vim-sleuth",            event = "VimEnter" },
 
 	-- split and join lines
-	{ "echasnovski/mini.splitjoin", version = "*", event = "VeryLazy", opts = {} },
+	{ "echasnovski/mini.splitjoin",  version = "*",     event = "VeryLazy", opts = {} },
 
 	-- highlight cursor word
-	{ "echasnovski/mini.cursorword", version = "*", event = "VeryLazy", opts = { delay = 500 } },
+	{ "echasnovski/mini.cursorword", version = "*",     event = "VeryLazy", opts = { delay = 500 } },
 
 	-- generate bracket pairs
-	{ "echasnovski/mini.pairs", version = "*", event = "VeryLazy", opts = {} },
+	{ "echasnovski/mini.pairs",      version = "*",     event = "VeryLazy", opts = {} },
 
 	-- neotest for running test case
 	{

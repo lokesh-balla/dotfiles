@@ -79,15 +79,15 @@ return {
 				nmap("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
 
 				require("which-key").add({ "g", group = "Goto" })
-				nmap("gd", require("telescope.builtin").lsp_definitions, "[G]oto [D]efinition")
-				nmap("gr", require("telescope.builtin").lsp_references, "[G]oto [R]eferences")
-				nmap("gI", require("telescope.builtin").lsp_implementations, "[G]oto [I]mplementation")
+				nmap("gd", require("snacks.picker").lsp_definitions, "[G]oto [D]efinition")
+				nmap("gr", require("snacks.picker").lsp_references, "[G]oto [R]eferences")
+				nmap("gI", require("snacks.picker").lsp_implementations, "[G]oto [I]mplementation")
 				nmap("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
 
 				require("which-key").add({ "<leader>f", group = "Format" })
 				nmap("<leader>ff", vim.lsp.buf.format, "[F]ormat [F]ile")
 
-				nmap("<leader>sD", require("telescope.builtin").lsp_type_definitions, "[S]earch Type [D]efinition")
+				nmap("<leader>sD", require("snacks.picker").lsp_type_definitions, "[S]earch Type [D]efinition")
 
 				nmap("K", vim.lsp.buf.hover, "Hover Documentation")
 				nmap("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation")

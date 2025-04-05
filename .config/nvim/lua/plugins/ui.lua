@@ -48,6 +48,13 @@ return {
 					"rust",
 					"vim",
 					"vimdoc",
+					"latex",
+					"norg",
+					"scss",
+					"svelte",
+					"tsx",
+					"typst",
+					"vue"
 				},
 				sync_install = false,
 				auto_install = false,
