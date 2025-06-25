@@ -23,6 +23,7 @@ return {
 	-- treesitter for syntax highlighting
 	{
 		"nvim-treesitter/nvim-treesitter",
+		event = "VeryLazy",
 		build = ":TSUpdate",
 		config = function()
 			require("nvim-treesitter.configs").setup({
@@ -79,6 +80,7 @@ return {
 	{
 		"MeanderingProgrammer/render-markdown.nvim",
 		dependencies = { "nvim-treesitter/nvim-treesitter", "echasnovski/mini.nvim" },
+		event = "VeryLazy",
 		opts = {
 			completions = { blink = { enabled = true } },
 		},

@@ -1,55 +1,48 @@
--- LSP Server configurations
---      The configuration is in format
---      <mason_server_name> = {
---          <all_the_lsp_configuration>
---      }
 local servers = {
 	lua_ls = {
-		Lua = {
-			workspace = {
-				checkThirdParty = false,
-			},
-			telemetry = {
-				enable = false,
+		settings = {
+			Lua = {
+				workspace = {
+					checkThirdParty = false,
+				},
+				telemetry = {
+					enable = false,
+				},
 			},
 		},
 	},
 	gopls = {
-		gopls = {
-			analyses = {
-				unusedparams = true,
+		settings = {
+			gopls = {
+				analyses = {
+					unusedparams = true,
+				},
+				hints = {
+					assignVariableTypes = true,
+					compositeLiteralFields = true,
+					compositeLiteralTypes = true,
+					constantValues = true,
+					functionTypeParameters = true,
+					parameterNames = true,
+					rangeVariableTypes = true
+				},
+				staticcheck = true,
+				gofumpt = true,
 			},
-			hints = {
-				assignVariableTypes = true,
-				compositeLiteralFields = true,
-				compositeLiteralTypes = true,
-				constantValues = true,
-				functionTypeParameters = true,
-				parameterNames = true,
-				rangeVariableTypes = true
-			},
-			staticcheck = true,
-			gofumpt = true,
 		},
 	},
 }
-
-local lsp_servers_to_install = {}
-for server_name, _ in pairs(servers) do
-	table.insert(lsp_servers_to_install, server_name)
-end
 
 return {
 	{
 		"neovim/nvim-lspconfig",
 		dependencies = {
-			"williamboman/mason.nvim",
-			"williamboman/mason-lspconfig.nvim",
+			"mason-org/mason.nvim",
 			"saghen/blink.cmp",
 			{ "folke/lazydev.nvim", ft = "lua", opts = {} }
 		},
 		config = function()
-			-- Configure Mason First
+			-- Configure Mason for installing LSP servers (optional but recommended)
 			require("mason").setup({
 				ui = {
 					icons = {
@@ -59,7 +52,8 @@ return {
 					},
 				},
 			})
-			-- nvim-cmp supports additional completion capabilities, so broadcast that to servers
+
+			-- Get capabilities from blink.cmp
 			local capabilities = vim.lsp.protocol.make_client_capabilities()
 			capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
 
@@ -94,20 +88,18 @@ return {
 				nmap("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation")
 			end
 
-			require("mason-lspconfig").setup({
-				ensure_installed = lsp_servers_to_install,
-				automatic_installation = false,
-				handlers = {
-					function(server_name)
-						require("lspconfig")[server_name].setup({
-							capabilities = capabilities,
-							on_attach = on_attach,
-							settings = servers[server_name] or {},
-							filetypes = (servers[server_name] or {}).filetypes,
-						})
-					end,
-				},
-			})
+			-- Configure LSP servers using vim.lsp.config (Neovim 0.11+)
+			for server_name, config in pairs(servers) do
+				vim.lsp.config[server_name] = vim.tbl_extend("force", {
+					capabilities = capabilities,
+					on_attach = on_attach,
+				}, config)
+			end
+
+			-- Enable the configured LSP servers
+			for server_name, _ in pairs(servers) do
+				vim.lsp.enable(server_name)
+			end
 		end,
 	},
 }
