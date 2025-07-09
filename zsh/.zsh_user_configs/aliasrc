@@ -26,29 +26,26 @@ fi
 
 # alias for ghostty terminal
 if [[ "$TERM" == "xterm-ghostty" ]]; then
-    # Function to copy ghostty terminfo to remote servers using official method
     ghostty_ssh() {
         local host="$1"
-        local control_path="/tmp/ghostty-ssh/control-${host}"
+        local control_path="/tmp/ghostty-ssh/control-%r@%h:%p"
 
-        # Create ghostty-ssh directory if it doesn't exist
-        mkdir -p /tmp/ghostty-ssh
+        # Start a master connection if not already present
+        if [[ ! -S "$control_path" ]]; then
+            # Start a background master connection (will prompt for password once)
+            ssh -o ControlMaster=auto -o ControlPersist=5m -o ControlPath="$control_path" -fN "$host"
+        fi
 
-        # Check if control socket already exists (connection is already established)
-        if [[ -S "$control_path" ]]; then
-            echo "Reusing existing SSH connection..."
+        # Now all subsequent ssh commands will reuse the connection (no password prompt)
+        if ssh -o ControlMaster=no -o ControlPath="$control_path" "$host" 'infocmp xterm-ghostty >/dev/null 2>&1'; then
+            echo "Ghostty terminfo already present on remote."
         else
-            # Use the official ghostty terminfo copying command (redirect output to /dev/null)
             echo "Copying ghostty terminfo to remote server..."
-            infocmp -x xterm-ghostty | ssh -o ControlMaster=auto -o ControlPersist=5m -o ControlPath="$control_path" "$host" -- tic -x - >/dev/null 2>&1
-
-            # Small delay to ensure connection is established
+            infocmp -x xterm-ghostty | ssh -o ControlMaster=no -o ControlPath="$control_path" "$host" -- tic -x - >/dev/null 2>&1
             sleep 0.5
         fi
 
-        # Connect with proper terminfo (reuse existing connection)
         ssh -t -o ControlMaster=no -o ControlPath="$control_path" "$host"
     }
-    # Alias for the enhanced SSH function
     alias ssh="ghostty_ssh"
 fi
