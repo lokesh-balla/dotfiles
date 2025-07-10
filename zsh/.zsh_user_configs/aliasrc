@@ -30,6 +30,9 @@ if [[ "$TERM" == "xterm-ghostty" ]]; then
         local host="$1"
         local control_path="/tmp/ghostty-ssh/control-%r@%h:%p"
 
+        # Create the directory if it doesn't exist
+        mkdir -p /tmp/ghostty-ssh
+
         # Start a master connection if not already present
         if [[ ! -S "$control_path" ]]; then
             # Start a background master connection (will prompt for password once)
