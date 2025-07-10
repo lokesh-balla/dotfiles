@@ -23,32 +23,3 @@ if [[ "$TERM" == "xterm-kitty" ]]; then
     alias icat="kitty +kitten icat"
     alias diff="kitty +kitten diff"
 fi
-
-# alias for ghostty terminal
-if [[ "$TERM" == "xterm-ghostty" ]]; then
-    ghostty_ssh() {
-        local host="$1"
-        local control_path="/tmp/ghostty-ssh/control-%r@%h:%p"
-
-        # Create the directory if it doesn't exist
-        mkdir -p /tmp/ghostty-ssh
-
-        # Start a master connection if not already present
-        if [[ ! -S "$control_path" ]]; then
-            # Start a background master connection (will prompt for password once)
-            ssh -o ControlMaster=auto -o ControlPersist=5m -o ControlPath="$control_path" -fN "$host"
-        fi
-
-        # Now all subsequent ssh commands will reuse the connection (no password prompt)
-        if ssh -o ControlMaster=no -o ControlPath="$control_path" "$host" 'infocmp xterm-ghostty >/dev/null 2>&1'; then
-            echo "Ghostty terminfo already present on remote."
-        else
-            echo "Copying ghostty terminfo to remote server..."
-            infocmp -x xterm-ghostty | ssh -o ControlMaster=no -o ControlPath="$control_path" "$host" -- tic -x - >/dev/null 2>&1
-            sleep 0.5
-        fi
-
-        ssh -t -o ControlMaster=no -o ControlPath="$control_path" "$host"
-    }
-    alias ssh="ghostty_ssh"
-fi
