@@ -1,0 +1,13 @@
+font-family = "JetBrains Mono"
+font-size = 16
+
+shell-integration-features = "cursor,sudo,title,ssh-env,ssh-terminfo"
+
+background-opacity = 0.80
+background-blur = true
+
+theme = "kitty"
+
+split-divider-color = #BFFFB8
+
+auto-update = off
