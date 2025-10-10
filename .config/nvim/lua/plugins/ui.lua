@@ -22,58 +22,50 @@ return {
 
 	-- treesitter for syntax highlighting
 	{
-		"nvim-treesitter/nvim-treesitter",
-		event = "VeryLazy",
-		build = ":TSUpdate",
-		config = function()
-			require("nvim-treesitter.configs").setup({
-				ensure_installed = {
-					"bash",
-					"c",
-					"cpp",
-					"css",
-					"dart",
-					"dockerfile",
-					"go",
-					"gomod",
-					"gosum",
-					"gowork",
-					"html",
-					"javascript",
-					"lua",
-					"markdown",
-					"markdown_inline",
-					"python",
-					"query",
-					"regex",
-					"rust",
-					"vim",
-					"vimdoc",
-					"latex",
-					"norg",
-					"scss",
-					"svelte",
-					"tsx",
-					"typst",
-					"vue"
-				},
-				sync_install = false,
-				auto_install = false,
-				ignore_install = {},
-				highlight = {
-					enable = true,
-					use_languagetree = true,
-				},
-				indent = {
-					enable = true,
-				},
-			})
+		'nvim-treesitter/nvim-treesitter',
+		lazy = false,
+		branch = 'main',
+		build = ':TSUpdate',
+		init = function()
+			require('nvim-treesitter').install({
+				"go",
+				"gomod",
+				"gosum",
+				"gotmpl",
+				"dockerfile",
+				"html",
+				"css",
+				"javascript",
+				"typescript",
+				"yaml",
+				"json",
+				"toml",
+				"proto",
+				"sql",
+				"rust",
+				"python",
+				"c",
+				"lua",
+				"vim",
+				"vimdoc",
+				"query",
+				"markdown",
+				"markdown_inline"
+			}):wait(300000) -- to prevent async execution waiting max. 5 minutes
 
-			-- setting folding
-			vim.opt.foldmethod = "expr"
-			vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
-			vim.opt.foldenable = false
-		end,
+			vim.api.nvim_create_autocmd('FileType', {
+				callback = function() 
+					-- highlights
+					local hasStarted = pcall(vim.treesitter.start) -- errors for filetypes with no parser
+
+					-- indent
+					if hasStarted then
+						vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+						vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+					end
+				end,
+			})
+		end
 	},
 
 	-- markdown render

@@ -7,6 +7,7 @@ This repository contains my personal dotfiles for various applications, managed 
 Before using these dotfiles, you need to install the following tools:
 
 - **GNU Stow**: A symlink farm manager which takes distinct packages of software and symlinks them into place.
+- **tree-sitter-cli**: used for compilation of neovim language parsers
 - **fd**: A simple, fast and user-friendly alternative to `find`.
 - **ripgrep (rg)**: A line-oriented search tool that recursively searches the current directory for a regex pattern.
 
