@@ -10,7 +10,7 @@ rm -rf ${ZSH_PLUGINS_PATH}/*
 # All the repos to clone
 # syntax must be "{repo_path} {folder_name}"
 repos=(
-	"https://github.com/woefe/git-prompt.zsh.git git-prompt"
+	"https://github.com/lokesh-balla/git-prompt.zsh.git git-prompt"
 	"https://github.com/zsh-users/zsh-syntax-highlighting.git zsh-syntax-highlighting"
 	"https://github.com/zsh-users/zsh-autosuggestions.git zsh-autosuggestions"
 	"https://github.com/zsh-users/zsh-completions.git zsh-completions"
