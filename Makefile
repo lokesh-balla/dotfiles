@@ -9,7 +9,7 @@ nvim:
 zshell:
 	mkdir -p ${HOME}/.zsh_user_configs
 	stow --dir ${PWD}/zsh --target ${HOME} .
-	zsh ${HOME}/.zsh_user_configs/update_plugins.sh
+	git clone --depth=1 https://github.com/mattmc3/antidote.git ${HOME}/.zsh_user_configs/.antidote
 
 clean_nvim:
 	stow -D --dir ${PWD}/.config/nvim --target ${HOME}/.config/nvim . 

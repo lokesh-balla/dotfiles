@@ -38,25 +38,24 @@ bindkey -e
 #####################################################################
 ## Plugins
 #####################################################################
-plugins=(git-prompt zsh-syntax-highlighting zsh-autosuggestions zsh-completions colored-man-pages)
+export ANTIDOTE_HOME="${ZSH}/.antidote"
+export ANTIDOTE_BUNDLES="${ZSH}/.zsh_plugins.txt"
+export ANTIDOTE_STATIC="${ZSH}/.zsh_plugins.zsh"
 
-# add zsh-completions to path
-FPATH="${ZSH}/plugins/zsh-completions/src:${FPATH}"
+if [[ -r "${ANTIDOTE_HOME}/antidote.zsh" ]]; then
+  source "${ANTIDOTE_HOME}/antidote.zsh"
 
-is_plugin() {
-  local base_dir=$1
-  local name=$2
-  builtin test -f $base_dir/plugins/$name/$name.plugin.zsh ||
-    builtin test -f $base_dir/plugins/$name/_$name
-}
-
-for plugin in "${plugins[@]}"; do
-  if is_plugin "${ZSH}" "${plugin}"; then
-    source ${ZSH}/plugins/${plugin}/${plugin}.plugin.zsh
+  if [[ -r "${ANTIDOTE_BUNDLES}" ]]; then
+    if [[ ! -r "${ANTIDOTE_STATIC}" || "${ANTIDOTE_BUNDLES}" -nt "${ANTIDOTE_STATIC}" ]]; then
+      antidote bundle < "${ANTIDOTE_BUNDLES}" >| "${ANTIDOTE_STATIC}"
+    fi
+    source "${ANTIDOTE_STATIC}"
   else
-    echo "plugin '$plugin' not found"
+    echo "antidote bundle file not found: ${ANTIDOTE_BUNDLES}"
   fi
-done
+else
+  echo "antidote not found. Run: make zshell"
+fi
 #####################################################################
 
 #####################################################################
@@ -119,5 +118,4 @@ fi
 
 source "${ZSH}/themes/${PROMPT_THEME}.zsh-theme"
 #####################################################################
-
 

@@ -1,0 +1,10 @@
+# prompt/status plugin
+lokesh-balla/git-prompt.zsh
+
+# completions path
+zsh-users/zsh-completions kind:fpath path:src
+
+# interactive shell enhancements
+zsh-users/zsh-autosuggestions
+zsh-users/zsh-syntax-highlighting
+ohmyzsh/ohmyzsh path:plugins/colored-man-pages kind:defer
