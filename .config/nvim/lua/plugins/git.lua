@@ -55,22 +55,21 @@ return {
 
 				local function map(mode, l, r, opts)
 					opts = opts or {}
-					opts.buffer = bufnr
+					opts.buf = bufnr
 					vim.keymap.set(mode, l, r, opts)
 				end
 
 				require("which-key").add({ "<leader>g", group = "Git" })
 
-				-- Actions
-				map("n", "<leader>gs", gitsigns.stage_hunk, { desc = "[G]it Hunk [S]tage" })
+				-- Actions (stage_hunk also unstages when the cursor is on a staged sign)
+				map("n", "<leader>gs", gitsigns.stage_hunk, { desc = "[G]it Hunk [S]tage/unstage" })
 				map("n", "<leader>gr", gitsigns.reset_hunk, { desc = "[G]it Hunk [R]eset" })
 				map("v", "<leader>gs", function()
 					gitsigns.stage_hunk({ vim.fn.line("."), vim.fn.line("v") })
-				end, { desc = "[G]it Hunk [S]tage" })
+				end, { desc = "[G]it Hunk [S]tage/unstage" })
 				map("v", "<leader>gr", function()
 					gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
 				end, { desc = "[G]it Hunk [R]eset" })
-				map("n", "<leader>gu", gitsigns.undo_stage_hunk, { desc = "[G]it Hunk Stage [U]ndo" })
 				map("n", "<leader>gp", gitsigns.preview_hunk, { desc = "[G]it Hunk [P]review" })
 				map("n", "<leader>gb", function()
 					gitsigns.blame_line({ full = true })

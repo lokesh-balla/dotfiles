@@ -26,7 +26,7 @@ return {
 		lazy = false,
 		branch = 'main',
 		build = ':TSUpdate',
-		init = function()
+		config = function()
 			require('nvim-treesitter').install({
 				"go",
 				"gomod",
@@ -50,22 +50,20 @@ return {
 				"vimdoc",
 				"query",
 				"markdown",
-				"markdown_inline"
-			}):wait(300000) -- to prevent async execution waiting max. 5 minutes
+				"markdown_inline",
+			})
 
 			vim.api.nvim_create_autocmd('FileType', {
-				callback = function() 
-					-- highlights
-					local hasStarted = pcall(vim.treesitter.start) -- errors for filetypes with no parser
+				callback = function()
+					local hasStarted = pcall(vim.treesitter.start)
 
-					-- indent
 					if hasStarted then
 						vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
 						vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 					end
 				end,
 			})
-		end
+		end,
 	},
 
 	-- markdown render

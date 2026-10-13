@@ -24,7 +24,7 @@ local servers = {
 					constantValues = true,
 					functionTypeParameters = true,
 					parameterNames = true,
-					rangeVariableTypes = true
+					rangeVariableTypes = true,
 				},
 				staticcheck = true,
 				gofumpt = true,
@@ -35,71 +35,73 @@ local servers = {
 
 return {
 	{
+		"mason-org/mason.nvim",
+		opts = {
+			ui = {
+				icons = {
+					package_installed = "✓",
+					package_pending = "➜",
+					package_uninstalled = "✗",
+				},
+			},
+		},
+	},
+	{
 		"neovim/nvim-lspconfig",
 		dependencies = {
-			"mason-org/mason.nvim",
 			"saghen/blink.cmp",
-			{ "folke/lazydev.nvim", ft = "lua", opts = {} }
+			"folke/which-key.nvim",
+			{ "folke/lazydev.nvim", ft = "lua", opts = {} },
 		},
 		config = function()
-			-- Configure Mason for installing LSP servers (optional but recommended)
-			require("mason").setup({
-				ui = {
-					icons = {
-						package_installed = "✓",
-						package_pending = "➜",
-						package_uninstalled = "✗",
-					},
-				},
+			local capabilities = require("blink.cmp").get_lsp_capabilities()
+
+			require("which-key").add({
+				{ "<leader>c", group = "Code" },
+				{ "g",         group = "Goto" },
+				{ "<leader>f", group = "Format" },
 			})
 
-			-- Get capabilities from blink.cmp
-			local capabilities = vim.lsp.protocol.make_client_capabilities()
-			capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
-
-			local on_attach = function(_, bufnr)
-				local nmap = function(keys, func, desc)
-					if desc then
-						desc = "LSP: " .. desc
+			vim.api.nvim_create_autocmd("LspAttach", {
+				group = vim.api.nvim_create_augroup("UserLspAttach", { clear = true }),
+				callback = function(ev)
+					local nmap = function(keys, func, desc)
+						vim.keymap.set("n", keys, func, {
+							buf = ev.buf,
+							desc = "LSP: " .. desc,
+						})
 					end
 
-					vim.keymap.set("n", keys, func, {
-						buffer = bufnr,
-						desc = desc,
-					})
-				end
+					nmap("<leader>cr", vim.lsp.buf.rename, "[C]ode LSP [R]ename")
+					nmap("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
 
-				require("which-key").add({ "<leader>c", group = "Code" })
-				nmap("<leader>cr", vim.lsp.buf.rename, "[C]ode LSP [R]ename")
-				nmap("<leader>ca", vim.lsp.buf.code_action, "[C]ode [A]ction")
+					nmap("gd", require("snacks.picker").lsp_definitions, "[G]oto [D]efinition")
+					nmap("gr", require("snacks.picker").lsp_references, "[G]oto [R]eferences")
+					nmap("gI", require("snacks.picker").lsp_implementations, "[G]oto [I]mplementation")
+					nmap("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
 
-				require("which-key").add({ "g", group = "Goto" })
-				nmap("gd", require("snacks.picker").lsp_definitions, "[G]oto [D]efinition")
-				nmap("gr", require("snacks.picker").lsp_references, "[G]oto [R]eferences")
-				nmap("gI", require("snacks.picker").lsp_implementations, "[G]oto [I]mplementation")
-				nmap("gD", vim.lsp.buf.declaration, "[G]oto [D]eclaration")
+					nmap("<leader>ff", vim.lsp.buf.format, "[F]ormat [F]ile")
+					nmap("<leader>sD", require("snacks.picker").lsp_type_definitions, "[S]earch Type [D]efinition")
+					nmap("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation")
+				end,
+			})
 
-				require("which-key").add({ "<leader>f", group = "Format" })
-				nmap("<leader>ff", vim.lsp.buf.format, "[F]ormat [F]ile")
-
-				nmap("<leader>sD", require("snacks.picker").lsp_type_definitions, "[S]earch Type [D]efinition")
-
-				nmap("K", vim.lsp.buf.hover, "Hover Documentation")
-				nmap("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation")
-			end
-
-			-- Configure LSP servers using vim.lsp.config (Neovim 0.11+)
+			-- Merge with nvim-lspconfig defaults (cmd, filetypes, root markers)
+			vim.lsp.config("*", { capabilities = capabilities })
 			for server_name, config in pairs(servers) do
-				vim.lsp.config[server_name] = vim.tbl_extend("force", {
-					capabilities = capabilities,
-					on_attach = on_attach,
-				}, config)
-			end
-
-			-- Enable the configured LSP servers
-			for server_name, _ in pairs(servers) do
-				vim.lsp.enable(server_name)
+				vim.lsp.config(server_name, config)
 			end
 		end,
+	},
+	{
+		"mason-org/mason-lspconfig.nvim",
+		dependencies = {
+			"mason-org/mason.nvim",
+			"neovim/nvim-lspconfig",
+		},
+		opts = {
+			ensure_installed = vim.tbl_keys(servers),
+			automatic_enable = true,
+		},
 	},
 }
