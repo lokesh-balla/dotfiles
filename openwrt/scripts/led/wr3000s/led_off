@@ -1,0 +1,28 @@
+#!/bin/sh
+
+STATE="${1:-/root/scripts/led/led-state}"
+
+# Save active trigger and brightness before changing anything.
+: > "$STATE"
+for led in /sys/class/leds/*; do
+    [ -f "$led/trigger" ] || continue
+
+    active=$(sed -n 's/.*\[\([^]]*\)\].*/\1/p' "$led/trigger")
+    [ -n "$active" ] || active=none
+
+    brightness=
+    [ -f "$led/brightness" ] && brightness=$(cat "$led/brightness")
+
+    printf '%s\t%s\t%s\n' "${led##*/}" "$active" "$brightness" >> "$STATE"
+done
+
+# Turn off the switch LEDs.
+mdio mt7530-0 0:0x1f raw 0x21 0x0008
+
+# Turn off the LEDs exposed through sysfs.
+for led in /sys/class/leds/*; do
+    [ -f "$led/trigger" ] || continue
+    echo none > "$led/trigger"
+    [ -f "$led/brightness" ] && echo 0 > "$led/brightness"
+done
+

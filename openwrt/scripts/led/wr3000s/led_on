@@ -1,0 +1,29 @@
+#!/bin/sh
+
+STATE="${1:-/root/scripts/led/led-state}"
+
+if [ ! -f "$STATE" ]; then
+    echo "No saved LED state at $STATE. Run led_off first."
+    exit 1
+fi
+
+while IFS="$(printf '\t')" read -r name trigger brightness; do
+    led="/sys/class/leds/$name"
+    [ -d "$led" ] || continue
+
+    [ -f "$led/trigger" ] && echo "$trigger" > "$led/trigger"
+
+    if [ "$trigger" = "none" ] && [ -n "$brightness" ] && [ -f "$led/brightness" ]; then
+        echo "$brightness" > "$led/brightness"
+    fi
+done < "$STATE"
+
+# Restore the switch LEDs.
+mdio mt7530-0 0:0x1f raw 0x21 0x000b
+
+# Reload configured LED behavior.
+/etc/init.d/led restart
+
+# Remove the saved state after restoring.
+rm -f "$STATE"
+

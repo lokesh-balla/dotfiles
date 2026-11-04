@@ -1,0 +1,2 @@
+0 22 * * * /root/scripts/led/led_off /root/scripts/led/led-state
+0 6 * * * /root/scripts/led/led_on /root/scripts/led/led-state
